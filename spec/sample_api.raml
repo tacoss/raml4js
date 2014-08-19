@@ -1,0 +1,29 @@
+#%RAML 0.8
+
+title: Sample
+version: v1
+
+baseUri: http://api.example.com/{version}
+
+/articles:
+  get:
+
+  /types:
+    get:
+
+      queryParameters:
+        limit:
+
+  /{articleId}:
+    get:
+    post:
+    patch:
+
+    /{property}:
+      get:
+
+      /set:
+        post:
+
+    /trackback:
+      put:
