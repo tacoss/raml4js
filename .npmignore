@@ -1,0 +1,8 @@
+.*
+*.log
+*.tgz
+.DS_Store
+generated*
+Gruntfile.js
+/spec
+/node_modules
