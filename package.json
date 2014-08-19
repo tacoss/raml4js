@@ -1,6 +1,6 @@
 {
   "name": "raml2js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Generate static Javascript API-clients from RAML definitions!",
   "main": "lib/raml2js.js",
   "repository": {
