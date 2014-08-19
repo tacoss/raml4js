@@ -1,0 +1,27 @@
+{
+  "name": "raml2js",
+  "version": "0.1.0",
+  "description": "Generate static Javascript API-clients from RAML definitions!",
+  "main": "lib/raml2js.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pateketrueke/raml2js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pateketrueke/raml2js/issues"
+  },
+  "author": {
+    "name": "Alvaro Cabrera",
+    "email": "pateketrueke@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^2.4.1",
+    "raml-parser": "^0.8.7"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jasmine-node": "^0.2.1"
+  }
+}
