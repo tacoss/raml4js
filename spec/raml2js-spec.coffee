@@ -16,11 +16,22 @@ describe 'raml2js', ->
     expect(typeof generated_client).toEqual 'object'
 
   it 'should expose a chainable api', ->
-    generated_client.requestHandler (method, request_uri, request_options) ->
-      [method, request_uri, request_options]
+    generated_client.requestHandler (method, request_url, request_options) ->
+      [method, request_url, request_options]
 
-    expect(generated_client.articles.get()).toEqual ['GET', 'http://api.example.com/v1/articles', data: {}]
-    expect(generated_client.articles.articleId(1).get()).toEqual ['GET', 'http://api.example.com/v1/articles/1', data: {}]
-    expect(generated_client.articles.articleId(4).property('body').get()).toEqual ['GET', 'http://api.example.com/v1/articles/4/body', data: {}]
-    expect(generated_client.articles.articleId(13).property('excerpt').set.post()).toEqual ['POST', 'http://api.example.com/v1/articles/13/excerpt/set', data: {}]
-    expect(generated_client.articles.articleId(20).trackback.put({ pong: 'true' })).toEqual ['PUT', 'http://api.example.com/v1/articles/20/trackback', data: { pong: 'true' }]
+    try
+      expect(generated_client.articles.get()).toEqual ['GET', 'http://api.example.com/v1/articles', data: {}]
+      expect(generated_client.articles.articleId(1).get()).toEqual ['GET', 'http://api.example.com/v1/articles/1', data: {}]
+      expect(generated_client.articles.articleId(4).property('body').get()).toEqual ['GET', 'http://api.example.com/v1/articles/4/body', data: {}]
+      expect(generated_client.articles.articleId(13).property('excerpt').set.post()).toEqual ['POST', 'http://api.example.com/v1/articles/13/excerpt/set', data: {}]
+      expect(generated_client.articles.articleId(20).trackback.put({ pong: 'true' })).toEqual ['PUT', 'http://api.example.com/v1/articles/20/trackback', data: { pong: 'true' }]
+    catch e
+      lines = factory.split '\n'
+      params = e.stack.match(/<anonymous>:(\d+):(\d+)/)
+
+      exception = if params
+        new Error e.message + '\n' + lines[params[1] - 1] + '\n' + (new Array(+params[2])).join('.') + '^'
+      else
+        e
+
+      throw exception
