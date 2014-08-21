@@ -4,12 +4,19 @@ describe 'raml2js', ->
   factory = null
 
   it 'should produce a valid CommonJS module as string', (done) ->
-    raml2js __dirname + '/sample_api.raml', (err, code) ->
+    raml2js __dirname + '/sample_api.raml', (err, data) ->
+      code = raml2js.client(data)
+
       expect(err).toBeNull()
       expect(typeof code).toEqual 'string'
       expect(code).toContain 'module.exports'
+
       factory = code
       done()
+
+  it 'should validate and debug the RAML-definition', (done) ->
+    raml2js __dirname + '/sample_api.raml', (err, data) ->
+      raml2js.validate { data }, (->), done
 
   it 'should create an api-client on the fly', ->
     expect(-> generated_client = eval(factory)()).not.toThrow()

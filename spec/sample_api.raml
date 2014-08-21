@@ -5,25 +5,82 @@ version: v1
 
 baseUri: http://api.example.com/{version}
 
+schemas:
+  - article: '{ "id": "article" }'
+  - articles: '{ "id": "articles" }'
+  - articleTypes: '{ "id": "articleTypes" }'
+  - articleProperty: '{ "id": "articleProperty" }'
+  - articleTrackback: '{ "id": "articleTrackback" }'
+
 /articles:
   get:
+    responses:
+      200:
+        body:
+          application/json:
+            schema: articles
+            example: "{}"
 
   /types:
     get:
-
       queryParameters:
         limit:
 
+      responses:
+        200:
+          body:
+            application/json:
+              schema: articleTypes
+              example: "{}"
+
   /{articleId}:
     get:
+      responses:
+        200:
+          body:
+            application/json:
+              schema: article
+              example: "{}"
+
     post:
+      responses:
+        200:
+          body:
+            application/json:
+              schema: article
+              example: "{}"
+
     patch:
+      responses:
+        200:
+          body:
+            application/json:
+              schema: article
+              example: "{}"
 
     /{property}:
       get:
+        responses:
+          200:
+            body:
+              application/json:
+                schema: articleProperty
+                example: "{}"
 
       /set:
         post:
+          responses:
+            200:
+              body:
+                application/json:
+                  schema: articleProperty
+                  example: "{}"
 
     /trackback:
       put:
+        responses:
+          200:
+            body:
+              application/json:
+                schema: articleTrackback
+                example: "{}"
