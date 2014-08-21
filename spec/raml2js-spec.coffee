@@ -1,17 +1,18 @@
 describe 'raml2js', ->
   raml2js = require('../lib/raml2js')
+
+  factory_client = null
   generated_client = null
-  factory = null
 
   it 'should produce a valid CommonJS module as string', (done) ->
     raml2js __dirname + '/sample_api.raml', (err, data) ->
-      code = raml2js.client(data)
+      factory_client = raml2js.client(data)
 
       expect(err).toBeNull()
-      expect(typeof code).toEqual 'string'
-      expect(code).toContain 'module.exports'
+      expect(typeof factory_client).toEqual 'function'
+      expect(factory_client.length).toEqual 1
+      expect(factory_client.toString()).toContain 'function anonymous'
 
-      factory = code
       done()
 
   it 'should validate and debug the RAML-definition', (done) ->
@@ -19,7 +20,7 @@ describe 'raml2js', ->
       raml2js.validate { data }, (->), done
 
   it 'should create an api-client on the fly', ->
-    expect(-> generated_client = eval(factory)()).not.toThrow()
+    expect(-> generated_client = factory_client(baseUri: 'http://api.fake.com/{version}')).not.toThrow()
     expect(typeof generated_client).toEqual 'object'
 
   it 'should expose a chainable api', ->
@@ -27,13 +28,13 @@ describe 'raml2js', ->
       [method, request_url, request_options]
 
     try
-      expect(generated_client.articles.get()).toEqual ['GET', 'http://api.example.com/v1/articles', data: {}]
-      expect(generated_client.articles.articleId(1).get()).toEqual ['GET', 'http://api.example.com/v1/articles/1', data: {}]
-      expect(generated_client.articles.articleId(4).property('body').get()).toEqual ['GET', 'http://api.example.com/v1/articles/4/body', data: {}]
-      expect(generated_client.articles.articleId(13).property('excerpt').set.post()).toEqual ['POST', 'http://api.example.com/v1/articles/13/excerpt/set', data: {}]
-      expect(generated_client.articles.articleId(20).trackback.put({ pong: 'true' })).toEqual ['PUT', 'http://api.example.com/v1/articles/20/trackback', data: { pong: 'true' }]
+      expect(generated_client.articles.get()).toEqual ['GET', 'http://api.fake.com/v1/articles', data: {}]
+      expect(generated_client.articles.articleId(1).get()).toEqual ['GET', 'http://api.fake.com/v1/articles/1', data: {}]
+      expect(generated_client.articles.articleId(4).property('body').get()).toEqual ['GET', 'http://api.fake.com/v1/articles/4/body', data: {}]
+      expect(generated_client.articles.articleId(13).property('excerpt').set.post()).toEqual ['POST', 'http://api.fake.com/v1/articles/13/excerpt/set', data: {}]
+      expect(generated_client.articles.articleId(20).trackback.put({ pong: 'true' })).toEqual ['PUT', 'http://api.fake.com/v1/articles/20/trackback', data: { pong: 'true' }]
     catch e
-      lines = factory.split '\n'
+      lines = factory_client.split '\n'
       params = e.stack.match(/<anonymous>:(\d+):(\d+)/)
 
       exception = if params
