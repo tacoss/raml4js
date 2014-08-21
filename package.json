@@ -1,6 +1,6 @@
 {
   "name": "raml4js",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "description": "RAML goodies for Javascript",
   "main": "lib/raml4js.js",
   "repository": {

@@ -99,4 +99,4 @@ Any help will be well received.
 
 ## Build status
 
-[![Build Status](https://travis-ci.org/pateketrueke/raml4js.png?branch=master)](https://travis-ci.org/pateketrueke/raml4js)
+[![Build Status](https://travis-ci.org/gextech/raml4js.png?branch=master)](https://travis-ci.org/gextech/raml4js)
