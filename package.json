@@ -1,14 +1,14 @@
 {
-  "name": "raml2js",
+  "name": "raml4js",
   "version": "0.1.1",
-  "description": "Generate static Javascript API-clients from RAML definitions!",
-  "main": "lib/raml2js.js",
+  "description": "RAML goodies for Javascript",
+  "main": "lib/raml4js.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/pateketrueke/raml2js.git"
+    "url": "git://github.com/gextech/raml4js.git"
   },
   "bugs": {
-    "url": "https://github.com/pateketrueke/raml2js/issues"
+    "url": "https://github.com/gextech/raml4js/issues"
   },
   "author": {
     "name": "Alvaro Cabrera",

@@ -1,13 +1,13 @@
 RAML goodies for Javascript
 ===========================
 
-Under the hood `raml2js` uses the extraordinary `raml-parser` and `tv4` modules for validation tasks:
+Under the hood `raml4js` uses the extraordinary `raml-parser` and `tv4` modules for validation tasks:
 
 ```javascript
 var fs = require('fs'),
-    raml2js = require('raml2js');
+    raml4js = require('raml4js');
 
-raml2js('/path/to/api.raml', function(err, data) {
+raml4js('/path/to/api.raml', function(err, data) {
   if (err) {
     // raml-parser errors
   } else {
@@ -16,7 +16,7 @@ raml2js('/path/to/api.raml', function(err, data) {
         exampleSchema: '{ "$schema": "http://json-schema.org/schema" }'
     };
 
-    raml2js.validate({ data: data, schemas: schemas }, function(type, obj) {
+    raml4js.validate({ data: data, schemas: schemas }, function(type, obj) {
       // raml-validation logging
     }, function(err) {
       if (err) {
@@ -25,7 +25,7 @@ raml2js('/path/to/api.raml', function(err, data) {
 
       // api-client generation for free
       var overrides = { baseUri: 'http://api.other-site.com/{version}' },
-          factory = raml2js.client(data),
+          factory = raml4js.client(data),
           client = factory(overrides);
 
       // save the client factory as CommonJS module
@@ -37,18 +37,18 @@ raml2js('/path/to/api.raml', function(err, data) {
 
 ## Methods
 
-- `raml2js(file, callback)`
-- `raml2js.read(file, callback)`
+- `raml4js(file, callback)`
+- `raml4js.read(file, callback)`
 
   Will parse the RAML **file** and then will invoke the **callback(err, data)** function.
 
   If no error occurs **data** will contain the parsed RAML as object, otherwise **err** will be fulfilled.
 
-- `raml2js.client(data)`
+- `raml4js.client(data)`
 
   Generate static code using **data** as RAML object input.
 
-- `raml2js.validate(obj, [logger, ]callback)`
+- `raml4js.validate(obj, [logger, ]callback)`
 
   Will validate the RAML and all its json-schema definitions, **obj** must contain the following `{ data: ramlObject, schemas: externalSchemas }` values.
 
@@ -99,4 +99,4 @@ Any help will be well received.
 
 ## Build status
 
-[![Build Status](https://travis-ci.org/pateketrueke/raml2js.png?branch=master)](https://travis-ci.org/pateketrueke/raml2js)
+[![Build Status](https://travis-ci.org/pateketrueke/raml4js.png?branch=master)](https://travis-ci.org/pateketrueke/raml4js)

@@ -1,12 +1,12 @@
-describe 'raml2js', ->
-  raml2js = require('../lib/raml2js')
+describe 'raml4js', ->
+  raml4js = require('../lib/raml4js')
 
   factory_client = null
   generated_client = null
 
   it 'should produce a valid CommonJS module as string', (done) ->
-    raml2js __dirname + '/sample_api.raml', (err, data) ->
-      factory_client = raml2js.client(data)
+    raml4js __dirname + '/sample_api.raml', (err, data) ->
+      factory_client = raml4js.client(data)
 
       expect(err).toBeNull()
       expect(typeof factory_client).toEqual 'function'
@@ -16,8 +16,8 @@ describe 'raml2js', ->
       done()
 
   it 'should validate and debug the RAML-definition', (done) ->
-    raml2js __dirname + '/sample_api.raml', (err, data) ->
-      raml2js.validate { data }, (->), done
+    raml4js __dirname + '/sample_api.raml', (err, data) ->
+      raml4js.validate { data }, (->), done
 
   it 'should create an api-client on the fly', ->
     expect(-> generated_client = factory_client(baseUri: 'http://api.fake.com/{version}')).not.toThrow()
