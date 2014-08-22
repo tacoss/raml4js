@@ -18,6 +18,7 @@
   "dependencies": {
     "lodash": "^2.4.1",
     "raml-parser": "^0.8.7",
+    "raml-validate": "^1.0.0",
     "tv4": "^1.1.0"
   },
   "devDependencies": {

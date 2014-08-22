@@ -35,7 +35,15 @@ schemas:
               example: "{}"
 
   /{articleId}:
+    uriParameters:
+      articleId:
+        type: number
+
     get:
+      queryParameters:
+        value:
+          type: number
+
       responses:
         200:
           body:
