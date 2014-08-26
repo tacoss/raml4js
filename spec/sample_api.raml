@@ -6,6 +6,7 @@ version: v1
 baseUri: http://api.example.com/{version}
 
 schemas:
+  - page: '{ "id": "page" }'
   - article: '{ "id": "article" }'
   - articles: '{ "id": "articles" }'
   - articleTypes: '{ "id": "articleTypes" }'
@@ -92,3 +93,13 @@ schemas:
               application/json:
                 schema: articleTrackback
                 example: "{}"
+
+
+/pages/{author}/{id}-{slug}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            schema: page
+            example: "{}"

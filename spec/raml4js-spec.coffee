@@ -21,6 +21,7 @@ describe 'raml4js', ->
 
   it 'should create an api-client on the fly', ->
     expect(-> generated_client = factory_client(baseUri: 'http://api.fake.com/{version}')).not.toThrow()
+    expect(generated_client.options.baseUri).toEqual 'http://api.fake.com/{version}'
     expect(typeof generated_client).toEqual 'object'
 
   it 'should expose a chainable api', ->
