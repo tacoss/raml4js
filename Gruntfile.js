@@ -3,8 +3,11 @@ module.exports = function(grunt) {
     watch: {
       all: {
         files: ['spec/**', 'lib/**'],
-        tasks: ['jasmine_node']
+        tasks: ['jshint', 'jasmine_node']
       }
+    },
+    jshint: {
+      all: ['Gruntfile.js', 'lib/**/*.js']
     },
     jasmine_node: {
       all: ['spec'],
@@ -16,4 +19,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-jasmine-node');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+
+  grunt.registerTask('default', ['jshint', 'jasmine_node']);
 };
