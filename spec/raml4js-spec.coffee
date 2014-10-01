@@ -15,10 +15,6 @@ describe 'raml4js', ->
 
       done()
 
-  it 'should validate and debug the RAML-definition', (done) ->
-    raml4js __dirname + '/sample_api.raml', (err, data) ->
-      raml4js.validate { data }, (->), done
-
   it 'should create an api-client on the fly', ->
     expect(-> generated_client = factory_client(baseUri: 'http://api.fake.com/{version}')).not.toThrow()
     expect(generated_client.options.baseUri).toEqual 'http://api.fake.com/{version}'
