@@ -1,7 +1,7 @@
-RAML goodies for Javascript
+RAML clients for Javascript
 ===========================
 
-Under the hood `raml4js` uses the extraordinary `raml-parser` and `tv4` modules for validation tasks:
+Under the hood `raml4js` uses the extraordinary `raml-parser` to load your RAML:
 
 ```javascript
 var fs = require('fs'),
@@ -11,26 +11,16 @@ raml4js('/path/to/api.raml', function(err, data) {
   if (err) {
     // raml-parser errors
   } else {
-    // external schemas
-    var schemas = {
-        exampleSchema: '{ "$schema": "http://json-schema.org/schema" }'
-    };
+    // api-client generation for free
+    var overrides = { baseUri: 'http://api.other-site.com/{version}' },
+        factory = raml4js.client(data),
+        client = factory(overrides);
 
-    raml4js.validate({ data: data, schemas: schemas }, function(type, obj) {
-      // raml-validation logging
-    }, function(err) {
-      if (err) {
-        // raml-validation warnings
-      }
+    // save the client factory as CommonJS module
+    fs.writeFileSync('/path/to/api-client.js', 'module.exports = ' + factory.toString() + ';');
 
-      // api-client generation for free
-      var overrides = { baseUri: 'http://api.other-site.com/{version}' },
-          factory = raml4js.client(data),
-          client = factory(overrides);
-
-      // save the client factory as CommonJS module
-      fs.writeFileSync('/path/to/api-client.js', 'module.exports = ' + factory.toString() + ';');
-    });
+    // or use the api-client created directly
+    // client.path.to.resource.get();
   }
 });
 ```
@@ -48,23 +38,7 @@ raml4js('/path/to/api.raml', function(err, data) {
 
   Generate static code using **data** as RAML object input.
 
-- `raml4js.validate(obj, [logger, ]callback)`
-
-  Will validate the RAML and all its json-schema definitions, **obj** must contain the following `{ data: ramlObject, schemas: externalSchemas }` values.
-
-  &mdash; `schemas` are optional.
-
-  While validation is performed the **logger(type, obj)** function will be invoked.
-
-  There are many log-types: `label`, `resource`, `success`, `warning`, `error`, `missing` and `root`.
-
-  The **obj** represents the current resource under validation.
-
-  &mdash; `logger` is optional.
-
-  Finally the **callback(err)** function will be invoked.
-
-  If everything is fine **err** will be empty.
+Since `0.2.0` the method `validate()` was deprecated in favor of [ramlev](https://github.com/cybertk/ramlev).
 
 ## Client usage
 
