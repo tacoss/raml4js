@@ -35,7 +35,7 @@ function usage(header) {
   }
 
   message.push('Usage:');
-  message.push('  raml4js src/index.raml <output>');
+  message.push('  raml4js src/index.raml [STDOUT]');
 
   return message.join('\n');
 }
