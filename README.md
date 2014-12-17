@@ -1,5 +1,4 @@
-RAML clients for Javascript
-===========================
+[![Build Status](https://travis-ci.org/gextech/raml4js.png?branch=master)](https://travis-ci.org/gextech/raml4js) [![NPM version](https://badge.fury.io/js/raml4js.png)](http://badge.fury.io/js/raml4js) [![Coverage Status](https://coveralls.io/repos/gextech/raml4js/badge.png?branch=master)](https://coveralls.io/r/gextech/raml4js?branch=master)
 
 Under the hood `raml4js` uses the extraordinary `raml-parser` to load your RAML:
 
@@ -65,12 +64,8 @@ client.articles.articleId(1).get().then(function(response) {
 });
 ```
 
-## Work in progress
+## Yet another RAML client generator?
 
-I'm working on this, isn't ready for production.
+Yes, there's an official [raml-client-generator](https://github.com/mulesoft/raml-client-generator) for full-featured Javascript clients.
 
-Any help will be well received.
-
-## Build status
-
-[![Build Status](https://travis-ci.org/gextech/raml4js.png?branch=master)](https://travis-ci.org/gextech/raml4js)
+Both generators produces almost the same client, but `raml4js` doesn't ship any dependency for it.
