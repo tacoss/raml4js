@@ -3,6 +3,9 @@
   "version": "0.2.0",
   "description": "RAML goodies for Javascript",
   "main": "lib/raml4js.js",
+  "bin": {
+    "raml4js": "bin/cli.js"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/gextech/raml4js.git"
