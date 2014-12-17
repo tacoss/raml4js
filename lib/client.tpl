@@ -1,10 +1,9 @@
-
   // hack for embed raml-validation module
   var validate = (function() {
     var module = { exports: {} },
         exports = module.exports;
 
-    <%= raml_validate.split('\n').join('\n    ') %>// jshint ignore:line
+    <%= raml_validate.split('\n').join('\n    ') %>
 
     return module.exports();
   })();
@@ -36,7 +35,7 @@
     validateObject(obj, rules);
   }
 
-  var defaults = <%= _.e(settings) %>; // jshint ignore:line
+  var defaults = <%= _.e(settings) %>;
 
   function merge() {
     var target = {};
@@ -47,7 +46,7 @@
       for (var prop in source) {
         var value = source[prop];
 
-        target[prop] = 'undefined' !== value && null !== value ? value : target[prop];
+        target[prop] = value !== 'undefined' && value !== null ? value : target[prop];
       }
     }
 
@@ -83,7 +82,7 @@
       break;
 
       default:
-        if ('string' === typeof request_options) {
+        if (typeof request_options === 'string') {
           method = request_options;
           request_options = {};
         } else {
@@ -96,7 +95,7 @@
     delete request_options.path;
     delete request_options.method;
 
-    if ('function' !== typeof this._request) {
+    if (typeof this._request !== 'function') {
       throw new Error('Cannot invoke the request-handler');
     }
 
@@ -104,7 +103,7 @@
   };
 
   ApiContainer.prototype.requestHandler = function(callback) {
-    if ('function' !== typeof callback) {
+    if (typeof callback !== 'function') {
       throw new Error('Cannot use ' + callback + ' as request-handler');
     }
 
@@ -148,7 +147,6 @@
     };
   }
 
-  /* jshint ignore:start */
 <% _.each(resources, function(resource) {
   if (resource.xhr) { %>  client.<%= resource.property.join('.') %><%= 'delete' === resource.method ? '[' + _.e(resource.method) + ']' : '.' + resource.method %> = xhr(<%= _.e(resource.method.toUpperCase()) %>, <%= _.e(resource.path) %>, <%= _.e(resource.queryParameters || null) %>);
 
@@ -161,6 +159,5 @@
   });
 
 <% } }); %>
-  /* jshint ignore:end */
 
   return client;
