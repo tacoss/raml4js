@@ -2,4 +2,5 @@
 *.tgz
 .DS_Store
 generated*
+/reports
 /node_modules
