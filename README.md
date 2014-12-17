@@ -24,6 +24,15 @@ raml4js('/path/to/api.raml', function(err, data) {
 });
 ```
 
+## CLI
+
+Since `0.2.1` you can install `raml4js` globally:
+
+```bash
+$ npm install -g raml4js
+$ raml4js path/to/api.raml > client.js
+```
+
 ## Methods
 
 - `raml4js(file, callback)`
