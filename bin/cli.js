@@ -6,8 +6,7 @@ var pkg = require('../package.json'),
     raml4js = require('../lib/raml4js');
 
 var fs = require('fs'),
-    minimist = require('minimist'),
-    strip_comments = require('strip-comments');
+    minimist = require('minimist');
 
 var argv = minimist(process.argv.slice(2), {
   alias: {
@@ -65,10 +64,11 @@ if (argv.version) {
       exit(1);
     }
 
-    var code = 'module.exports = ' + raml4js.client(data).toString() + ';';
-
-    code = strip_comments(code);
-
-    writeln(code);
+    try {
+      writeln('module.exports = ' + raml4js.client(data).toString() + ';');
+    } catch (e) {
+      writeln(e.message);
+      exit(1);
+    }
   });
 }
