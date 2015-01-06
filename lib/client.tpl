@@ -56,7 +56,7 @@
   function replace(value, container, current_key) {
     return value.replace(/\{(\w+)\}/g, function(match, prop) {
       if (current_key === prop) {
-        throw new Error('Cannot interpolate self-references for ' + match);
+        throw new Error('cannot interpolate self-references for ' + match);
       }
 
       return container[prop];
@@ -96,7 +96,7 @@
     delete request_options.method;
 
     if (typeof this._request !== 'function') {
-      throw new Error('Cannot invoke the request-handler');
+      throw new Error('cannot invoke the request-handler');
     }
 
     return this._request(method, request_url, request_options);
@@ -104,7 +104,7 @@
 
   ApiContainer.prototype.requestHandler = function(callback) {
     if (typeof callback !== 'function') {
-      throw new Error('Cannot use ' + callback + ' as request-handler');
+      throw new Error('cannot use ' + callback + ' as request-handler');
     }
 
     this._request = callback;
