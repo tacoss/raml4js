@@ -11,8 +11,10 @@ var fs = require('fs'),
 var argv = minimist(process.argv.slice(2), {
   alias: {
     h: 'help',
-    v: 'version'
+    v: 'version',
+    c: 'classname'
   },
+  string: ['classname'],
   boolean: ['help', 'version']
 });
 
@@ -34,7 +36,10 @@ function usage(header) {
   }
 
   message.push('Usage:');
-  message.push('  raml4js src/index.raml [STDOUT]');
+  message.push('  raml4js src/index.raml [OPTIONS] > output.js');
+
+  message.push('\nOptions:');
+  message.push('  -c, --classname    Custom className for client object');
 
   return message.join('\n');
 }
@@ -65,7 +70,7 @@ if (argv.version) {
     }
 
     try {
-      writeln('module.exports = ' + raml4js.client(data).toString() + ';');
+      writeln('module.exports = ' + raml4js.client(data, argv.classname).toString() + ';');
     } catch (e) {
       writeln(e.message);
       exit(1);

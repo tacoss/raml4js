@@ -63,17 +63,18 @@
     });
   }
 
-  function ApiContainer(settings) {
+  function <%= class_name %>(settings) {
     this._reset();
     this.options = merge(defaults, settings);
   }
 
-  ApiContainer.prototype._reset = function() {
-    this._uriParameters = {};
-    this._requestHeaders = {};
+  <%= class_name %>.prototype._reset = function() {
+    this.resources = {};
+    this._params = {};
+    this._fetch = {};
   };
 
-  ApiContainer.prototype.request = function(method, request_url, request_options) {
+  <%= class_name %>.prototype.request = function(method, request_url, request_options) {
     switch (typeof request_url) {
       case 'object':
         request_options = request_url;
@@ -95,27 +96,22 @@
     delete request_options.path;
     delete request_options.method;
 
-    if (typeof this._request !== 'function') {
+    if (typeof this._fetch !== 'function') {
       throw new Error('cannot invoke the request-handler');
     }
 
-    return this._request(method, request_url, request_options);
+    return this._fetch(method, request_url, request_options);
   };
 
-  ApiContainer.prototype.requestHandler = function(callback) {
+  <%= class_name %>.prototype.requestHandler = function(callback) {
     if (typeof callback !== 'function') {
       throw new Error('cannot use ' + callback + ' as request-handler');
     }
 
-    this._request = callback;
+    this._fetch = callback;
   };
 
-  var client = new ApiContainer(overrides);
-
-  function factory(resource) {
-    // TODO: return source on chain?
-    return {};
-  }
+  var client = new <%= class_name %>(overrides);
 
   function setter(params, rules, resource) {
     return function() {
@@ -126,7 +122,7 @@
       }
 
       for (var key in params) {
-        client._uriParameters[params[key]] = values[key];
+        client._params[params[key]] = values[key];
       }
 
       return resource();
@@ -139,7 +135,7 @@
         validateObject(params, rules);
       }
 
-      var uri_params = merge(client._uriParameters, {
+      var uri_params = merge(client._params, {
         version: client.options.version
       });
 
@@ -148,15 +144,13 @@
   }
 
 <% _.each(resources, function(resource) {
-  if (resource.xhr) { %>  client.<%= resource.property.join('.') %><%= 'delete' === resource.method ? '[' + _.e(resource.method) + ']' : '.' + resource.method %> = xhr(<%= _.e(resource.method.toUpperCase()) %>, <%= _.e(resource.path) %>, <%= _.e(resource.queryParameters || null) %>);
+  if (resource.xhr) { %>  client.resources.<%= resource.property.join('.') %><%= 'delete' === resource.method ? '[' + _.e(resource.method) + ']' : '.' + resource.method %> = xhr(<%= _.e(resource.method.toUpperCase()) %>, <%= _.e(resource.path) %>, <%= _.e(resource.queryParameters || null) %>);
 
-<% } else if (resource.keys) { %>  client.<%= resource.property.join('.') %>.<%= resource.method %> = setter(<%= _.e(resource.keys) %>, <%= _.e(resource.uriParameters ? _.pick(resource.uriParameters, resource.keys) : null) %>, function() {
-    return client.<%= resource.property.join('.') %>.<%= resource.method %>;
+<% } else if (resource.keys) { %>  client.resources.<%= resource.property.join('.') %>.<%= resource.method %> = setter(<%= _.e(resource.keys) %>, <%= _.e(resource.uriParameters ? _.pick(resource.uriParameters, resource.keys) : null) %>, function() {
+    return client.resources.<%= resource.property.join('.') %>.<%= resource.method %>;
   });
 
-<% } else { %>  client.<%= resource.property.join('.') %> = factory(function() {
-    return client.<%= resource.property.join('.') %>;
-  });
+<% } else { %>  client.resources.<%= resource.property.join('.') %> = {};
 
 <% } }); %>
 

@@ -19,7 +19,7 @@ raml4js('/path/to/api.raml', function(err, data) {
     fs.writeFileSync('/path/to/api-client.js', 'module.exports = ' + factory.toString() + ';');
 
     // or use the api-client created directly
-    // client.path.to.resource.get();
+    // client.resources.path.to.resource.get();
   }
 });
 ```
@@ -33,6 +33,8 @@ $ npm install -g raml4js
 $ raml4js path/to/api.raml > client.js
 ```
 
+Use `raml4js -h` to see full usage info.
+
 ## Methods
 
 - `raml4js(file, callback)`
@@ -42,9 +44,11 @@ $ raml4js path/to/api.raml > client.js
 
   If no error occurs **data** will contain the parsed RAML as object, otherwise **err** will be fulfilled.
 
-- `raml4js.client(data)`
+- `raml4js.client(data, class_name)`
 
   Generate static code using **data** as RAML object input.
+
+  Will use **class_name** for the client instance, defaults to `APIClient`.
 
 Since `0.2.0` the method `validate()` was deprecated in favor of [ramlev](https://github.com/cybertk/ramlev).
 
@@ -68,7 +72,7 @@ client.requestHandler(function(method, request_url, request_options) {
 If you have a resource like `GET /articles/{articleId}`, then:
 
 ```javascript
-client.articles.articleId(1).get().then(function(response) {
+client.resources.articles.articleId(1).get().then(function(response) {
   console.log(response.getJSON());
 });
 ```
@@ -77,4 +81,4 @@ client.articles.articleId(1).get().then(function(response) {
 
 Yes, there's an official [raml-client-generator](https://github.com/mulesoft/raml-client-generator) for full-featured Javascript clients.
 
-Both generators produces almost the same client, but `raml4js` doesn't ship any dependency for it.
+Since `raml4js` doesn't ship any dependency you can use `fetch()` or even jQuery's `$.ajax` for.
