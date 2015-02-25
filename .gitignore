@@ -3,4 +3,5 @@
 .DS_Store
 generated*
 /reports
+/generated
 /node_modules

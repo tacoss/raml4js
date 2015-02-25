@@ -6,4 +6,5 @@ generated*
 Gruntfile.js
 /spec
 /reports
+/generated
 /node_modules
